@@ -49,9 +49,9 @@
   function stat(label,value,icon,foot,cls=""){return '<article class="stat-card '+cls+'"><div class="stat-head"><span>'+label+'</span><span class="stat-icon">'+icon+'</span></div><div class="stat-value">'+value+'</div><div class="stat-foot">'+foot+'</div></article>'}
   function pageIntro(title,desc,button=""){return '<div class="page-intro"><div><h2>'+title+'</h2><p>'+desc+'</p></div>'+button+'</div>'}
   function renderDashboard(){
-    const total=state.fees.reduce((a,f)=>a+Number(f.amount),0)*Math.max(1,new Set(state.students.map(s=>s.class_name)).size);
+    const total=state.students.reduce((sum,student)=>sum+studentBalance(student).assigned,0);
     const collected=state.payments.reduce((a,p)=>a+Number(p.amount),0);
-    const pending=Math.max(0,total-collected);
+    const pending=state.students.reduce((sum,student)=>sum+studentBalance(student).balance,0);
     const paidCount=state.students.filter(s=>studentStatus(s)==="Paid").length;
     const due=state.students.map(s=>({...s,b:studentBalance(s)})).filter(s=>s.b.balance>0).sort((a,b)=>b.b.balance-a.b.balance).slice(0,5);
     const recent=state.payments.slice(0,6);
