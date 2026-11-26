@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Ledgerly · School Fee Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+  <main id="auth-screen" class="auth-screen">
+    <section class="auth-aside">
+      <div class="brand brand-light"><span class="brand-mark">L</span><span>ledgerly</span></div>
+      <div class="auth-message">
+        <span class="eyebrow">SCHOOL FINANCE, SIMPLIFIED</span>
+        <h1>Clarity for every fee.<br><em>Confidence</em> in every number.</h1>
+        <p>A calmer way to manage student records, payments and outstanding balances.</p>
+      </div>
+      <div class="auth-aside-foot">SCHOOL FEE MANAGEMENT · 2026</div>
+    </section>
+    <section class="auth-main">
+      <div class="auth-card">
+        <div class="auth-mobile-brand brand"><span class="brand-mark">L</span><span>ledgerly</span></div>
+        <span class="eyebrow" id="auth-eyebrow">WELCOME BACK</span>
+        <h2 id="auth-title">Sign in to your account</h2>
+        <p class="muted" id="auth-description">Enter your details to access the admin workspace.</p>
+        <form id="auth-form">
+          <label id="name-field" class="field hidden">Full name<input id="auth-name" type="text" autocomplete="name" placeholder="Your name"></label>
+          <label class="field">Email address<input id="auth-email" type="email" required autocomplete="email" placeholder="admin@school.edu"></label>
+          <label class="field">Password<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters"></label>
+          <button class="btn btn-primary btn-wide" id="auth-submit" type="submit">Sign in <span>→</span></button>
+        </form>
+        <div class="auth-links"><button id="auth-switch" class="text-button">Create first admin</button><button id="forgot-password" class="text-button">Forgot password?</button></div>
+        <p class="auth-note">Access is restricted to authorised school staff.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Ledgerly home"><span class="brand-mark">L</span><span>ledgerly</span></a>
+      <div class="school-switch"><span class="school-avatar">S</span><span><b>School workspace</b><small>Administration</small></span><span class="switch-chevron">⌄</span></div>
+      <span class="nav-caption">WORKSPACE</span>
+      <nav class="nav-list">
+        <button class="nav-link active" data-page="dashboard"><span class="nav-icon">▦</span>Overview</button>
+        <button class="nav-link" data-page="students"><span class="nav-icon">♙</span>Students</button>
+        <button class="nav-link" data-page="fees"><span class="nav-icon">▤</span>Fee structure</button>
+        <button class="nav-link" data-page="payments"><span class="nav-icon">↗</span>Payments</button>
+        <button class="nav-link" data-page="reports"><span class="nav-icon">▥</span>Reports</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="nav-caption">PREFERENCES</span>
+        <button class="nav-link" data-page="settings"><span class="nav-icon">⚙</span>Settings</button>
+        <div class="sidebar-user"><div class="user-avatar" id="user-avatar">A</div><div class="user-meta"><b id="user-name">Administrator</b><small id="user-role">Admin</small></div><button id="sign-out" class="icon-button" title="Sign out" aria-label="Sign out">⇥</button></div>
+      </div>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <button id="mobile-menu" class="icon-button mobile-menu" aria-label="Open navigation">☰</button>
+        <div><span class="topbar-kicker">SCHOOL MANAGEMENT</span><h1 id="page-heading">Overview</h1></div>
+        <div class="topbar-right"><span class="today-label" id="today-label"></span><div class="top-avatar" id="top-avatar">A</div></div>
+      </header>
+      <div class="content" id="page-content">
+        <div class="loading-state">Loading your workspace…</div>
+      </div>
+      <footer class="app-footer"><span>Ledgerly · Fee Management</span><span id="last-updated">Connected workspace</span></footer>
+    </section>
+  </div>
+
+  <dialog id="record-dialog" class="record-dialog">
+    <form method="dialog" class="dialog-dismiss"><button class="icon-button" aria-label="Close">×</button></form>
+    <div id="dialog-content"></div>
+  </dialog>
+</body>
+</html>
