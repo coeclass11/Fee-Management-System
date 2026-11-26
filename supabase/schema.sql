@@ -93,8 +93,26 @@ create policy "Authenticated users manage students" on public.students
 for all to authenticated using (true) with check (true);
 
 drop policy if exists "Authenticated users manage fee structures" on public.fee_structures;
-create policy "Authenticated users manage fee structures" on public.fee_structures
-for all to authenticated using (true) with check (true);
+drop policy if exists "Authenticated users read fee structures" on public.fee_structures;
+drop policy if exists "Admins insert fee structures" on public.fee_structures;
+drop policy if exists "Admins update fee structures" on public.fee_structures;
+drop policy if exists "Admins delete fee structures" on public.fee_structures;
+
+create policy "Authenticated users read fee structures" on public.fee_structures
+for select to authenticated using (true);
+
+create policy "Admins insert fee structures" on public.fee_structures
+for insert to authenticated
+with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));
+
+create policy "Admins update fee structures" on public.fee_structures
+for update to authenticated
+using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'))
+with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));
+
+create policy "Admins delete fee structures" on public.fee_structures
+for delete to authenticated
+using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));
 
 drop policy if exists "Authenticated users manage payments" on public.payments;
 create policy "Authenticated users manage payments" on public.payments
