@@ -73,9 +73,10 @@
     '</tbody></table>'+(rows.length?"":'<div class="empty-state">No matching students found.</div>')+'</div></section>';
   }
   function renderFees(){
-    return pageIntro("Fee structure","Set fee amounts by class and academic year.",'<button class="btn btn-primary" data-action="add-fee">＋ Add fee</button>')+
+    const isAdmin=state.profile?.role==="admin";
+    return pageIntro("Fee structure","Set fee amounts by class and academic year.",isAdmin?'<button class="btn btn-primary" data-action="add-fee">＋ Add fee</button>':'')+
     '<section class="table-panel"><div class="table-wrap"><table><thead><tr><th>Fee name</th><th>Class</th><th>Academic year</th><th>Amount</th><th>Due date</th><th>Actions</th></tr></thead><tbody>'+
-    state.fees.map(f=>'<tr><td><b>'+esc(f.title)+'</b></td><td>'+esc(f.class_name)+'</td><td>'+esc(f.academic_year||"—")+'</td><td><b>'+money(f.amount)+'</b></td><td>'+date(f.due_date)+'</td><td><div class="table-actions"><button class="small-action" data-action="edit-fee" data-id="'+f.id+'">Edit</button><button class="small-action" data-action="delete-fee" data-id="'+f.id+'">Delete</button></div></td></tr>').join("")+
+    state.fees.map(f=>'<tr><td><b>'+esc(f.title)+'</b></td><td>'+esc(f.class_name)+'</td><td>'+esc(f.academic_year||"—")+'</td><td><b>'+money(f.amount)+'</b></td><td>'+date(f.due_date)+'</td><td>'+(isAdmin?'<div class="table-actions"><button class="small-action" data-action="edit-fee" data-id="'+f.id+'">Edit</button><button class="small-action" data-action="delete-fee" data-id="'+f.id+'">Delete</button></div>':'<span class="muted">View only</span>')+'</td></tr>').join("")+
     '</tbody></table>'+(state.fees.length?"":'<div class="empty-state">No fee structures yet. Add a fee to get started.</div>')+'</div></section>';
   }
   function renderPayments(){
